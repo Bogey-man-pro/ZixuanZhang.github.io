@@ -10,7 +10,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 
-PALETTE = ("#F5F1E8", "#292823", "#716D64", "#DDD7CC", "#73785A")
+PALETTE = ("#F5F1E8", "#292823", "#716D64", "#DDD7CC", "#6A6F51")
 REQUIRED_SECTIONS = ("about", "education", "interests", "projects", "contact")
 LEGACY_PATTERNS = (
     r"\bhero-visual\b",
@@ -76,6 +76,17 @@ class Document(HTMLParser):
             self.link_text.append(data)
 
 
+def relative_luminance(color: str) -> float:
+    channels = [int(color[index:index + 2], 16) / 255 for index in (1, 3, 5)]
+    linear = [value / 12.92 if value <= 0.04045 else ((value + 0.055) / 1.055) ** 2.4 for value in channels]
+    return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
+
+
+def contrast_ratio(foreground: str, background: str) -> float:
+    light, dark = sorted((relative_luminance(foreground), relative_luminance(background)), reverse=True)
+    return (light + 0.05) / (dark + 0.05)
+
+
 def inspect(path: Path) -> list[str]:
     errors: list[str] = []
     if not path.is_file():
@@ -124,6 +135,12 @@ def inspect(path: Path) -> list[str]:
     for color in PALETTE:
         if color.lower() not in lower:
             errors.append(f"missing approved palette color {color}")
+    page_color = re.search(r"--page\s*:\s*(#[0-9a-fA-F]{6})", source)
+    accent_color = re.search(r"--accent\s*:\s*(#[0-9a-fA-F]{6})", source)
+    if not page_color or not accent_color:
+        errors.append("could not determine page and accent colors for contrast check")
+    elif contrast_ratio(accent_color.group(1), page_color.group(1)) < 4.5:
+        errors.append("accent color contrast against page background is below 4.5:1")
     if "fonts.googleapis.com" in lower or "use.typekit.net" in lower:
         errors.append("unexpected remote font dependency")
 
