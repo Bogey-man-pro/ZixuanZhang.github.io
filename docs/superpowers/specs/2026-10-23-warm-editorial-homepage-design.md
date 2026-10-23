@@ -45,9 +45,9 @@ Lead with a concise personal introduction, then present education and current in
 - Main text: charcoal, approximately #292823
 - Secondary text: warm gray, approximately #716D64
 - Rules and borders: paper gray, approximately #DDD7CC
-- Single accent: muted olive, approximately #73785A
+- Single accent: muted olive, approximately #6A6F51
 
-Use the accent sparingly for links, small markers, and focus states. Avoid blue/teal gradients, neon, glow, glass effects, strong drop shadows, and multiple competing accent colors. A subtle paper impression should come from warm color and restrained borders, not a heavy texture overlay.
+Use the accent sparingly for links, small markers, and focus states. Its contrast against the page background must be at least 4.5:1 for normal text. Avoid blue/teal gradients, neon, glow, glass effects, strong drop shadows, and multiple competing accent colors. A subtle paper impression should come from warm color and restrained borders, not a heavy texture overlay.
 
 ### Typography
 

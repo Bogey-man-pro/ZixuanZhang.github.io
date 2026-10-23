@@ -16,7 +16,7 @@
 - Main text: charcoal, approximately #292823.
 - Secondary text: warm gray, approximately #716D64.
 - Rules and borders: paper gray, approximately #DDD7CC.
-- Single accent: muted olive, approximately #73785A.
+- Single accent: muted olive, approximately #6A6F51; accent contrast against #F5F1E8 must be at least 4.5:1.
 - Use native/system font stacks only; do not add remote font dependencies.
 - Do not introduce a frontend framework, build step, analytics, animation library, or unnecessary dependencies.
 - Do not add fabricated publications, research results, metrics, project outcomes, endorsements, or contact details.
